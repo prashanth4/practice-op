@@ -1,9 +1,12 @@
 name: 'Check for new added scripts'
+
 on:
   push:
     branches:
       - master
-      - 'releases/**'
+    paths:
+      - scripts/*
+      
 jobs:
   check-for-new-scripts:
     runs-on: ubuntu-latest
