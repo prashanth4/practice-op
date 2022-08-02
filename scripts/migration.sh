@@ -1,1 +1,1 @@
-echo "Migration"
+echo "Migration 2"
