@@ -1,1 +1,1 @@
-echo "new migration"
+echo "new migration1"
