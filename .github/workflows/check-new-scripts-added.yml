@@ -1,4 +1,4 @@
-name: 'Check for new added scripts'
+name: 'Check for newly added scripts'
 
 on:
   push:
