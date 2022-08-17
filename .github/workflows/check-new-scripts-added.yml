@@ -34,23 +34,13 @@ jobs:
         
       - name: list files
         run: |
-          for file in ${{ steps.file_changes.outputs.files }}; do
-            echo "$file was changed"
+          folders=""
+
+          for path in ${{ steps.file_changes.outputs.files }}; do
+                  if echo $path | grep "scripts/.*" >/dev/null; then
+                          folder=`echo $path | awk -F"/" '{print $2}'`
+                          folders+="$folder "
+                  fi
           done
-      
-  dump_contexts_to_log:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump GitHub context
-        id: github_context_step
-        run: echo '${{ toJSON(github) }}'
-      - name: Dump job context
-        run: echo '${{ toJSON(job) }}'
-      - name: Dump steps context
-        run: echo '${{ toJSON(steps) }}'
-      - name: Dump runner context
-        run: echo '${{ toJSON(runner) }}'
-      - name: Dump strategy context
-        run: echo '${{ toJSON(strategy) }}'
-      - name: Dump matrix context
-        run: echo '${{ toJSON(matrix) }}'
+
+          echo $folders
