@@ -1,1 +1,1 @@
-echo "new migration12"
+echo "new migasdfasfration12"
