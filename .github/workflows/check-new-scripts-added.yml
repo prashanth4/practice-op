@@ -39,7 +39,7 @@ jobs:
                   fi
           done
           
-          ${{ env.folders=$folders }}
+          echo "GITHUB_FOLDERS=$folders" >> $GITHUB_ENV
           
       - name: Create team sync issue
         uses: imjohnbo/issue-bot@3daae12aa54d38685d7ff8459fc8a2aee8cea98b
@@ -49,7 +49,6 @@ jobs:
           title: "Team sync"
           body: |
             ### Agenda
-            {{$env.folders}}
             - [ ] Start the recording
             - [ ] Check-ins
             - [ ] Discussion points
@@ -59,6 +58,7 @@ jobs:
             Add things to discuss below
 
             - [Work this week](https://github.com/orgs/github/projects/3)
+            - {{ $GITHUB_FOLDERS }}
           pinned: false
           close-previous: false
           
