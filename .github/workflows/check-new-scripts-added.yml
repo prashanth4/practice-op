@@ -12,35 +12,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-#       - run: curl -A 'Mandrill-Curl/1.0' -d '{"key":"FRFOkai6JHMaPKDeY57feg","message":{"html":"<p> Upgrade scripts were added/modified at this location https://github.com/Openprise/openprise/tree/master/daass/server/scripts/</p>","subject":"New DB Scripts Added","from_email":"no-reply@openprisetech.com","from_name":"Github Actions","to":[{"email":"prashanth.bodduna@openprisetech.com"}]}}' 'https://mandrillapp.com/api/1.0/messages/send.json'
-      - run: echo "This job's status is ${{ job.status }}."
       
       - uses: actions/checkout@v3
       
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v26.1
-
-      - name: List all changed files
-        run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
-          done
-      
-      - name: Get changed files 2
+      - name: Get files changed
         id: file_changes
         uses: trilom/file-changes-action@v1.2.3
         
       - name: list files
         run: |
+          # Get the all folders in which upgrade scripts are Updated/Added
           folders=""
-
-          for path in ${{ steps.file_changes.outputs.files }}; do
+          
+          for path in $paths; do
                   if echo $path | grep "scripts/.*" >/dev/null; then
                           folder=`echo $path | awk -F"/" '{print $2}'`
-                          folders+="$folder "
+                          if [ `echo $folders | grep -c $folder` -eq 0 ]; then
+                                  folders+="$folder "
+                          fi
                   fi
           done
-
+          
           echo $folders
+          
+#          curl -A 'Mandrill-Curl/1.0' -d '{"key":"FRFOkai6JHMaPKDeY57feg","message":{"html":"<p> Upgrade scripts were added/modified at this location https://github.com/Openprise/openprise/tree/master/daass/server/scripts/</p>","subject":"New DB Scripts Added to ${folders}","from_email":"no-reply@openprisetech.com","from_name":"Github Actions","to":[{"email":"prashanth.bodduna@openprisetech.com"}]}}' 'https://mandrillapp.com/api/1.0/messages/send.json'
+          
+          
