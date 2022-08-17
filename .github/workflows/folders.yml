@@ -11,8 +11,6 @@ jobs:
     name: Test changed-files
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
       - name: Get changed files
         id: changed-files
@@ -20,6 +18,15 @@ jobs:
 
       - name: List all changed files
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
+          folders=""
+          
+          for path in ${{ steps.changed-files.outputs.all_changed_files }}; do
+                  if echo $path | grep "scripts/.*" >/dev/null; then
+                          folder=`echo $path | awk -F"/" '{print $2}'`
+                          if [ `echo $folders | grep -c $folder` -eq 0 ]; then
+                                  folders+="$folder "
+                          fi
+                  fi
           done
+          
+          echo $folders
