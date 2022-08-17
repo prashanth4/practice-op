@@ -1,1 +1,1 @@
-echo "Migration 232we23werdsf423324234ewr 123e232133423ewwrewrtet"
+echo "Migration 232we23werdsf423324234ewr 123423e232133423ewwrewrtet"
