@@ -21,7 +21,6 @@ jobs:
         
       - name: list files
         run: |
-          # Get the all folders in which upgrade scripts are Updated/Added
           folders=""
           
           for path in $paths; do
