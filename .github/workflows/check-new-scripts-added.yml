@@ -27,6 +27,7 @@ jobs:
           folders=""
           
           for path in ${{ steps.changed-files.outputs.all_changed_files }}; do
+                  echo $path
                   if echo $path | grep "scripts/.*" >/dev/null; then
                           folder=`echo $path | awk -F"/" '{print $2}'`
                           if [ `echo $folders | grep -c $folder` -eq 0 ]; then
