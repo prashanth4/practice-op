@@ -4,14 +4,14 @@ on:
   push:
     branches:
       - master
-    paths:
-      - scripts/**
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+            fetch-depth: 0 
 
       - name: Get changed files
         id: changed-files
