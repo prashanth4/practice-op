@@ -1,1 +1,1 @@
-echo "new migasdfasfration12"
+echo "new migasdfasfratiowerw ern12"
