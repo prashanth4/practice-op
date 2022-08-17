@@ -1,1 +1,1 @@
-echo "Migration 232423324234"
+echo "Migration 232423324234 erete etet"
