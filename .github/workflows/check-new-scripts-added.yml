@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    paths:
-      - scripts/*
+#     paths:
+#       - scripts/*
       
 jobs:
   check-for-new-scripts:
@@ -13,5 +13,22 @@ jobs:
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: curl -A 'Mandrill-Curl/1.0' -d '{"key":"FRFOkai6JHMaPKDeY57feg","message":{"html":"<p> Upgrade scripts were added/modified at this location https://github.com/Openprise/openprise/tree/master/daass/server/scripts/</p>","subject":"New DB Scripts Added","from_email":"no-reply@openprisetech.com","from_name":"Github Actions","to":[{"email":"prashanth.bodduna@openprisetech.com"}]}}' 'https://mandrillapp.com/api/1.0/messages/send.json'
+#       - run: curl -A 'Mandrill-Curl/1.0' -d '{"key":"FRFOkai6JHMaPKDeY57feg","message":{"html":"<p> Upgrade scripts were added/modified at this location https://github.com/Openprise/openprise/tree/master/daass/server/scripts/</p>","subject":"New DB Scripts Added","from_email":"no-reply@openprisetech.com","from_name":"Github Actions","to":[{"email":"prashanth.bodduna@openprisetech.com"}]}}' 'https://mandrillapp.com/api/1.0/messages/send.json'
       - run: echo "This job's status is ${{ job.status }}."
+      
+  dump_contexts_to_log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump job context
+        run: echo '${{ toJSON(job) }}'
+      - name: Dump steps context
+        run: echo '${{ toJSON(steps) }}'
+      - name: Dump runner context
+        run: echo '${{ toJSON(runner) }}'
+      - name: Dump strategy context
+        run: echo '${{ toJSON(strategy) }}'
+      - name: Dump matrix context
+        run: echo '${{ toJSON(matrix) }}'
