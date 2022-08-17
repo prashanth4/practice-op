@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-#     paths:
-#       - scripts/*
+    paths:
+      - scripts/**
       
 jobs:
   check-for-new-scripts:
@@ -34,7 +34,9 @@ jobs:
         
       - name: list files
         run: |
-          echo '${{ steps.file_changes.outputs.files}}'
+          for file in ${{ steps.file_changes.outputs.files }}; do
+            echo "$file was changed"
+          done
       
   dump_contexts_to_log:
     runs-on: ubuntu-latest
