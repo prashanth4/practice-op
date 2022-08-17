@@ -1,14 +1,15 @@
-name: CI
+name: 'Check for newly added scripts 2'
 
 on:
   push:
     branches:
       - master
+    paths:
+      - scripts/**
 
 jobs:
-  build:
-    runs-on: ubuntu-latest  # windows-latest | macos-latest
-    name: Test changed-files
+  check-for-new-scripts:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -19,6 +20,5 @@ jobs:
       - name: List all changed files
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo $file  
+            echo "$file was changed"
           done
-          
