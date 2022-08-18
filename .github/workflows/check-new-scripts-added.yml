@@ -38,11 +38,8 @@ jobs:
                   fi
           done
           
-          echo $folder
-          echo "$paths"
-          
           # Send email
-          # curl -A 'Mandrill-Curl/1.0' -d '{"key":"FRFOkai6JHMaPKDeY57feg","message":{"html":"<p> Upgrade scripts were added/modified at these locations '"${paths}"' </p>","subject":"New DB Scripts Added to '"$folders"'","from_email":"no-reply@openprisetech.com","from_name":"Github Actions","to":[{"email":"prashanth.bodduna@openprisetech.com"}]}}' 'https://mandrillapp.com/api/1.0/messages/send.json'
+          curl -A 'Mandrill-Curl/1.0' -d '{"key":"FRFOkai6JHMaPKDeY57feg","message":{"html":"<p> Upgrade scripts were added/modified at paths locations '"${paths}"' </p>","subject":"New DB Scripts Added to '"$folders"'","from_email":"no-reply@openprisetech.com","from_name":"Github Actions","to":[{"email":"prashanth.bodduna@openprisetech.com"}]}}' 'https://mandrillapp.com/api/1.0/messages/send.json'
           
          
           
