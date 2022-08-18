@@ -33,7 +33,7 @@ jobs:
                           folder=`echo $path | awk -F"/" '{print $2}'`
                           if [ `echo $folders | grep -c $folder` -eq 0 ]; then
                                   folders+="$folder "
-                                  paths+=$'\n'"https://github.com/Openprise/openprise/tree/master/daass/server/$path"
+                                  paths+=$'\n'"https://github.com/Openprise/openprise/tree/master/$path"
                           fi
                   fi
           done
