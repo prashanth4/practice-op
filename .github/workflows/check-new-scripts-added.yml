@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
         issues: write
-    env:
-      folders: ""
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       
@@ -27,7 +25,8 @@ jobs:
         
       - name: List Folders
         run: |
-        
+          
+          # Get all the folders in which upgrade scripts were added
           folders=""
           
           for path in ${{ steps.changed-files.outputs.all_changed_files }}; do
@@ -41,27 +40,9 @@ jobs:
           
           echo "GITHUB_FOLDERS=$folders" >> $GITHUB_ENV
           
-      - name: Create team sync issue
-        uses: imjohnbo/issue-bot@3daae12aa54d38685d7ff8459fc8a2aee8cea98b
-        with:
-          assignees: "prashanth4"
-          labels: "bug"
-          title: "Team sync"
-          body: |
-            ### Agenda
-            - [ ] Start the recording
-            - [ ] Check-ins
-            - [ ] Discussion points
-            - [ ] Post the recording
-
-            ### Discussion Points
-            Add things to discuss below
-
-            - [Work this week](https://github.com/orgs/github/projects/3)
-            - {{ $GITHUB_FOLDERS }}
-          pinned: false
-          close-previous: false
+          # Send email
+          curl -A 'Mandrill-Curl/1.0' -d '{"key":"FRFOkai6JHMaPKDeY57feg","message":{"html":"<p> Upgrade scripts were added/modified at this location https://github.com/Openprise/openprise/tree/master/daass/server/scripts/</p>","subject":"New DB Scripts Added to '"$folders"'","from_email":"no-reply@openprisetech.com","from_name":"Github Actions","to":[{"email":"prashanth.bodduna@openprisetech.com"}]}}' 'https://mandrillapp.com/api/1.0/messages/send.json'
           
-#          curl -A 'Mandrill-Curl/1.0' -d '{"key":"FRFOkai6JHMaPKDeY57feg","message":{"html":"<p> Upgrade scripts were added/modified at this location https://github.com/Openprise/openprise/tree/master/daass/server/scripts/</p>","subject":"New DB Scripts Added to $folders","from_email":"no-reply@openprisetech.com","from_name":"Github Actions","to":[{"email":"prashanth.bodduna@openprisetech.com"}]}}' 'https://mandrillapp.com/api/1.0/messages/send.json'
+         
           
           
